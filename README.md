@@ -1,4 +1,4 @@
 # bashScripting
-Fatma Kamel
-Aya Alah Ragab
-Alaa Mamdouh
+name / Fatma Kamel 
+name / Aya Alah Ragab 
+name / Alaa Mamdouh
