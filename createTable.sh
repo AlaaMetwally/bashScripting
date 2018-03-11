@@ -7,6 +7,19 @@ function exist() {
 cd $HOME/alaa/myDB
 } 
 
+#####Use DB#####
+function use() {
+db=$(echo "$variable" | awk '{ print tolower($2) }')
+usedb=$(echo "$db" | cut -d ';' -f 1)
+exist
+if [[ -d "$usedb"  ]]
+then
+cd $usedb
+echo "Database changed to $usedb"
+else
+echo "ERROR 1049 (42000): Unknown database '$usedb' "
+fi
+}
 
 
 #####Create_table#####
@@ -88,10 +101,65 @@ else
 fi
 }
 
+#####Sort table#####
+
+function sort_table(){
+	sorttab=$(echo "$variable" | awk '{ print tolower($3) }')
+    tablesort=$(echo "$sorttab" | cut -d ';' -f 1)
+    filename="$tablesort.txt"
+    exist
+    cd $usedb
+
+
+read -p "Enter col name: " col
+read -p "Enter col type: " coltype
+
+wordfile=$(echo "$col" | cut -d ';' -f 1)
+w=$(cat "$tablesort" | grep "$wordfile")
+wordValue=$(cat "$tablesort" | grep "$wordfile" | cut -d ":" -f1 )
+wv="$wordValue:"
+
+if [[  "$wv" != ":" ]] 
+then
+where=$(cat $tablesort | grep -n "$wordValue" | cut -d ":" -f 1) 
+txtvar=$(($where-4))
+fi
+
+ while true 
+	do
+	echo "Enter Type of sort"  
+	echo "1)asc"
+	echo "2)desc" 
+
+	read -p "#?" var
+
+	case $var in
+	 "1")
+        sort -t ":" -k"$txtvar" "$filename"
+        break
+           ;;
+
+	 "2")
+	    sort -t ":" -k"$txtvar" -r "$filename"
+	    break
+	      ;;
+		 
+		*)
+			echo "You Must Choose type of sort"
+	esac
+	done
+}
+################################################################
+
 var=$(echo "$variable" | awk '{ print tolower($1" "$2) }')
 
 
 if [[ $var == "create table" ]]
 then
 create_table
+
+elif [[ $var == "sort table" ]]
+then
+sort_table
+
 fi
