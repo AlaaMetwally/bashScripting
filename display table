@@ -1,0 +1,30 @@
+while (true)
+do
+read -p "myDB> " variable
+
+##Input#
+aya=$(echo "$variable" | awk '{ print tolower($1" "$2" "$3) }')
+
+##Function Call##
+if[[ $aya == "display table from " ]]
+then
+displayTable
+
+##display table function##
+function displayTable()
+{
+	tableDesc=$(echo "$variable" | awk '{ print tolower($4) }')
+	tableName=$(echo "$tableDesc" | cut -d ';' -f 1)
+	exist
+	cd $usedb
+	if [[ -f $tableName ]]
+	then
+	sed '1,3d' $tableName
+	else
+	echo "Table Not Found"
+	fi
+}
+else
+echo "ERROR 1064 (42000): You have an error in your myDB syntax"
+fi
+done

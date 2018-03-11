@@ -1,0 +1,33 @@
+while (true)
+do
+read -p "myDB> " variable
+##Input##
+var=$(echo "$variable" | awk '{ print tolower($1" "$2) }')
+
+##Function Call##
+if[[ $var == "delete from" ]]
+then
+deleteRw
+
+##delete record function##
+deleteRw()
+{
+	tabdata=$(echo "$variable" | awk '{ print tolower($3) }')
+	tabledata=$(echo "$tabdata" | cut -d ';' -f 1)
+	datafile="$tabledata.txt"
+	  while true 
+	  do 
+	   read -p "Enter The Primarykey You Want To Delete It's Record : " pkToDelete
+	    if [[ "$pkToDelete" ]]
+	     then 
+	     de=$(cat "$datafile" | grep "$pkToDelete:" )
+	     sed -i '/'"$de"'/d' "$datafile"
+	     break
+	    fi 
+	  done
+
+}
+else
+echo "ERROR 1064 (42000): You have an error in your myDB syntax"
+fi
+done

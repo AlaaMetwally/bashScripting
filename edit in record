@@ -1,0 +1,31 @@
+while (true)
+do
+read -p "myDB> " variable
+##Input##
+aya=$(echo "$variable" | awk '{ print tolower($1" "$2" "$3) }')
+
+##Function Call##
+if[[ $aya == "edit record from" ]]
+then
+edit_record
+
+##edit in record function##
+edit_record()
+{
+tabdata=$(echo "$variable" | awk '{ print tolower($4) }')
+tabledata=$(echo "$tabdata" | cut -d ';' -f 1)
+datafile="$tabledata.txt"
+echo "$datafile"
+while true 
+  do 
+   read -p " Enter  the number of Primarykey to edit the : " pkToEdit
+   read -p " enter the old value You want to replace : " oldValue
+   read -p " enter the new value You want to replace : " newValue
+     sed -i "s/^${pkToEdit}:*${oldValue}*/${pkToEdit}:${newValue}/" "$datafile"
+   break
+  done
+}
+else
+echo "ERROR 1064 (42000): You have an error in your myDB syntax"
+fi
+done
