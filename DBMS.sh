@@ -149,10 +149,21 @@ fi
 	esac
 	done
 }
+
+#####List tables#####
+function list ()
+{
+exist
+show=$(ls -d * | cut -d " " -f 10)
+echo "$show" 
+}
+
 ################################################################
 
 var=$(echo "$variable" | awk '{ print tolower($1" "$2) }')
-
+forlist=$(echo "$variable" | awk '{ print tolower($2) }')
+list=$(echo "$forlist" | cut -d ';' -f 1)
+use=$(echo "$variable" | awk '{ print tolower($1) }')
 
 if [[ $var == "create table" ]]
 then
@@ -161,5 +172,9 @@ create_table
 elif [[ $var == "sort table" ]]
 then
 sort_table
+
+elif [[ $use == "show"  && $list == "tables" ]]
+then 
+showtb
 
 fi
