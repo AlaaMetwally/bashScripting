@@ -21,6 +21,13 @@ echo "ERROR 1049 (42000): Unknown database '$usedb' "
 fi
 }
 
+#####show DB#####
+function list ()
+{
+exist
+show=$(ls -d * | cut -d " " -f 10)
+echo "$show" 
+}
 
 #####Create_table#####
 function create_table(){
