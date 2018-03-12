@@ -1,0 +1,21 @@
+Team member:
+--------------
+Alaa Mamdouh : alter table , drop table , exit , create database
+
+Fatma Kamel : sort , create table , show tables , use database , show database
+
+Aya Gad : delete record , display table , edit
+
+alaa , fatma , aya : select , insert
+
+
+GitHub:
+---------
+
+https://github.com/AlaaMetwally/bashScripting
+
+
+Waffle:
+-------
+
+https://waffle.io/AlaaMetwally/bashScripting
